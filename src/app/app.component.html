@@ -1,0 +1,121 @@
+<div class="">
+  <div class="w3-top w3-padding" id="largetop">
+    <div id="topNavigate" class="w3-bar w3-wide w3-padding w3-card">
+      <a id="title" class="w3-bar-item w3-text-white"><b>COVID-19 ESTIMATOR</b></a>
+      <!-- Float links to the right. Hide them on small screens -->
+      <div id="navlinks" class="w3-right w3-hide-small">
+        <a class="w3-bar-item w3-button w3-card w3-red w3-hover-white" href="https://www.cdc.gov">Visit CDC</a>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+
+  <main class="w3-margin-top">
+    <aside class="w3-left w3-card-16 leftcont ">
+
+      <form id="formid" #form="ngForm" name="covid" class="w3-form" (submit)="covid19ImpactEstimator(form)" novalidate>
+        <i>Note: Projections are calculated for Africa with an average age of 19.7, average daily income of $4 and an average income population of 0.73%</i>
+        <div class="w3-row w3-card-16 w3-margin-top innerconter">
+          <aside class="w3-margin">
+            <!----------------------------------->
+            <div class="w3-container w3-third w3-block w3-margin-bottom">
+              <aside class="w3-container">
+                <label for="population">Population</label><br>
+                <input id="population" class="w3-input w3-threequarter w3-animate-input" required type="number"
+                  [class.formerror]="data_population.invalid && data_population.touched" #data_population="ngModel"
+                  placeholder="Population" name="data_population" [(ngModel)]="model.data_population"><br>
+              </aside><br><br>
+              <aside class="w3-container">
+                <label for="time">Time Elapsed</label><br>
+                <input id="time" class="w3-input w3-threequarter w3-animate-input" required type="number"
+                  [class.formerror]="data_time_toelapse.invalid && data_time_toelapse.touched"
+                  #data_time_toelapse="ngModel" placeholder="Time Elapsed" name="data_time_toelapse"
+                  [(ngModel)]="model.data_time_to_elapse">
+              </aside>
+            </div>
+            <!-- ----------------------------- -->
+            <div class="w3-container w3-third w3-block w3-margin-bottom">
+              <aside class="w3-container">
+                <label for="report">Reported Cases</label><br>
+                <input id="report" class="w3-input w3-threequarter w3-animate-input" required type="number"
+                  [class.formerror]="data_reported_cases.invalid && data_reported_cases.touched"
+                  #data_reported_cases="ngModel" placeholder="Reported Cases" name="data_reported_cases"
+                  [(ngModel)]="model.data_reported_cases"><br>
+              </aside><br><br>
+              <aside class="w3-container">
+                <label for="bed">Total Hospital Beds</label><br>
+                <input id="bed" class="w3-input w3-threequarter w3-animate-input" required type="number"
+                  [class.formerror]="data_total_hospital_beds.invalid && data_total_hospital_beds.touched"
+                  #data_total_hospital_beds="ngModel" placeholder="Hospital Beds" name="data_total_hospital_beds"
+                  [(ngModel)]="model.data_total_hospital_beds">
+              </aside>
+            </div>
+            <!-------------------------------- -->
+            <div class="w3-container w3-third w3_block w3-margin-bottom">
+              <div class="w3-margin-bottom" style="display: flex; align-items: baseline;">
+                <label for="date">Period Type</label>
+                <figure>
+
+                  <select id="date" class="w3-rest w3-input w3-animate-input" name="data_period_type" #data_period_type
+                    (blur)="validatePeriodType(data_period_type.value)" [(ngModel)]="model.data_period_type"
+                    [class.formerror]="hasdataperiodtype" (change)="validatePeriodType(data_period_type.value)">
+                    <option value="default">Data Period type</option>
+                    <option value="days">Days</option>
+                    <option value="weeks">Weeks</option>
+                    <option value="months">Months</option>
+                  </select>
+                </figure>
+              </div>
+
+              <div class="w3-margin-top">
+                <input type="submit" name="data-go-estimate" value="Estimate Data" [disabled]="form.invalid"
+                  class="w3-card w3-button w3-threequarter w3-hover-border-red w3-red">
+              </div>
+            </div>
+          </aside>
+        </div>
+        <!-- Model:{{ model | json }} -->
+
+      </form>
+      <aside class="w3-container" id="reest" *ngIf="currimpactinfectx">
+       <h3 class="w3-center">Estimated Result</h3>
+        <main class="w3-card-16" id="result">
+          <div class="w3-container">
+            <h4>Minimum Impact</h4>
+            <ul class="w3-ul">
+              <li><span>Currently Infected : </span>{{ currimpactinfectx }}</li>
+              <li><span>Infections By RequestedTime  : </span>{{ infectbytimex }}</li>
+              <li><span>SevereCases By RequestedTime  : </span>{{ severbytimex }}</li>
+              <li><span>Hospital Beds By RequestedTime  : </span>{{ hospitalbedsx }}</li>
+              <li><span>Cases For ICU By RequestedTime  : </span>{{ icutimex }}</li>
+              <li><span>Cases For Ventilators By RequestedTime  : </span>{{ venttimex }}</li>
+              <li><span>Dollars In Flight  : </span>{{ dollarfilx }}</li>
+             
+            </ul>
+          </div>
+          <div class="w3-container">
+            <h4>Severe Impact</h4>
+            <ul class="w3-ul">
+              <li><span>Currently Infected : </span>{{ currimpactinfecty }}</li>
+              <li><span>Infections By RequestedTime  : </span>{{ infectbytimey }}</li>
+              <li><span>SevereCases By RequestedTime  : </span>{{ severbytimey }}</li>
+              <li><span>Hospital Beds By RequestedTime  : </span>{{ hospitalbedsy }}</li>
+              <li><span>Cases For ICU By RequestedTime  : </span>{{ icutimey }}</li>
+              <li><span>Cases For Ventilators By RequestedTime  : </span>{{ venttimey }}</li>
+              <li><span>Dollars In Flight  : </span>{{ dollarfily }}</li>
+            </ul>
+          </div>
+        </main>
+
+      </aside>
+
+      <!-- ================================= -->
+
+
+    </aside>
+
+  </main>
+
+
+</div>
