@@ -1,6 +1,9 @@
 # Covid19EstimatorUi
-
+This project was hosted on https://kind-mestorf-eb5647.netlify.com
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.22.
+
+# Aim 
+Used to generate covid-19 Estimations for africa with an average age of 19.7, average daily income of $4 and an average income population of 0.73%
 
 ## Development server
 
